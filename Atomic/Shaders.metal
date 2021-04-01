@@ -8,7 +8,7 @@
 using namespace metal;
 
 /*
- ORIGINAL
+ 1.0 
  */
 //kernel void compute_shader (device int& incremental [[buffer(0)]]){
 //    incremental++ ;
@@ -33,6 +33,18 @@ using namespace metal;
 //    }
 //}
 
+/*
+ 2.0
+ */
+//kernel void compute_shader (device metal::atomic_int& incremental [[buffer(0)]],threadgroup atomic_int& local [[threadgroup(0)]],ushort lid [[thread_position_in_threadgroup]] ){
+//  atomic_fetch_add_explicit(&local, 1, memory_order_relaxed);
+//  threadgroup_barrier(mem_flags::mem_threadgroup);
+//  if(lid == 0) {
+//    atomic_fetch_add_explicit(&incremental, (int)local, memory_order_relaxed);//ERROR
+//    atomic_fetch_add_explicit(&incremental, as_type<int>(local), memory_order_relaxed);//ERROR
+//  }
+//}
+
 
 /*
  APPLE
@@ -44,7 +56,9 @@ using namespace metal;
 //}
 
 
-
+/*
+ 3.0
+ */
 [[kernel]] void compute_shader (device atomic_int& incremental [[buffer(0)]],
                                 threadgroup atomic_int& local [[threadgroup(0)]],
                                 ushort lid [[thread_position_in_threadgroup]] ){
