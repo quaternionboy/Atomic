@@ -61,7 +61,7 @@ extension Renderer: MTKViewDelegate {
         let threadsPerGroup = MTLSizeMake(width, 1, 1)
         let threadsPerGrid = MTLSizeMake(10, 1, 1)
         computeCommandEncoder.setBuffer(incrementalBuffer, offset: 0, index: 0)
-        computeCommandEncoder.setThreadgroupMemoryLength(16, index: 0)
+//        computeCommandEncoder.setThreadgroupMemoryLength(16, index: 0)
         computeCommandEncoder.dispatchThreads(threadsPerGrid, threadsPerThreadgroup: threadsPerGroup)
         computeCommandEncoder.endEncoding()
         commandBufferCompute.commit()
